@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+<h:head>
+     <script type="text/javascript">
+	    function openUrl(){
+	       var webOptionUrl = document.getElementById("websiteForm:webOptionHidden").value;
+	       if(webOptionUrl.length === 0){
+	            var message = 'Please select website';
+	            alert(message);
+	       } else {
+	            window.open(webOptionUrl, '', 'width=1024, height=720, status=no, scrollbars=1 menubar=no, toolbar=no');
+	       }
+	  }
+  </script>
+</h:head>
+<h:body>
+     <h:form id="websiteForm">
+          <p:panelGrid id="selectOption" style="margin-left:500px;">
+               <p:row>
+                    <p:column>
+                         <p:outputLabel value="Please select website: "></p:outputLabel>
+                         <p:selectOneMenu id="option" value="#{myBean.selectedOption}" converterId="com.skychen.WebOptionConverter">
+                              <f:selectItem itemLabel="--" itemValue="" />
+                              <f:selectItems value="#{myBean.allWebOptions}" var="o" itemLabel="#{o.webOption}" itemValue="#{o}"/>
+                              <!-- <f:converter converterId="com.skychen.WebOptionConverter" /> -->
+                              <p:ajax update="@form" process="@this" listener="#{myBean.prepareUrl()}"></p:ajax>
+                         </p:selectOneMenu>
+                    </p:column>
+               </p:row>
+               <p:row>
+	               <p:column>
+	                    <p:commandButton id="submitButton" value="Submit" oncomplete="openUrl();" update="webOptionHidden"/>
+	                    <p:inputText id="webOptionHidden" value="#{myBean.webOptionUrl}" style="display:none;"/>
+	               </p:column>
+               </p:row>
+          </p:panelGrid>
+     </h:form>
+</h:body>
+
+<ui:debug hotkey="x"/>
+</html>
