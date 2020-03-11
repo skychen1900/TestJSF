@@ -6,6 +6,7 @@ if (!com.corejsf) {
             alert("Error occurred during Ajax call: " + data.description) 
       },
 
+      // 向ajax请求添加两个参数，列表框左上角的x,y位置
       updateCompletionItems: function(input, event) { 
          var keystrokeTimeout
 
@@ -19,10 +20,13 @@ if (!com.corejsf) {
             })
          }
         
+         // 合并ajax请求
+         // 用户输入停止达到350ms时触发一次ajax请求
          window.clearTimeout(keystrokeTimeout)
-         keystrokeTimeout = window.setTimeout(ajaxRequest, 350)
+         keystrokeTimeout = window.setTimeout(ajaxRequest, 350)  //js定时器
       },
 
+      // 输入失去焦点时隐藏列表框
       inputLostFocus: function(input) {       
          var hideListbox = function() {
             Element.hide(com.corejsf.getListboxId(input))
