@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>JSF 2.0 onload hack</title>
+	<script>
+		$(document).ready(function() {
+			//dispLoading("処理中...");
+
+			$.blockUI({ message: "<h1>Remote call in progress...</h1>" });
+
+			var id = setTimeout(document.getElementById("form1").submit(), 10);
+			clearTimeout(id);
+		})
+    </script>
+</h:head>
+<h:body onload=";">
+    <h:outputScript library="javascript" name="jquery-3.4.1.js" target="head" />
+    <h:outputScript library="javascript" name="jquery.blockUI.js" target="head" />
+    <h:outputScript library="javascript" name="newWindows.js" target="head" />
+	<form id="form1" action="#{flash['nextUrl']}" method="get">
+		<p>
+			<input type="submit" style="visibility: hidden" value="送信" />
+		</p>
+	</form>
+</h:body>
+<ui:debug hotkey="x" />
+</html>
